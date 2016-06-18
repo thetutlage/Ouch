@@ -90,10 +90,13 @@ JsonResponseHandler.prototype.handle = function (next) {
                 this.__returnFrames
             )
         };
-
+        
+        var code = this.__inspector.getCode();
+        
         if (this.__response && this.__sendResponse) {
             if (!this.__response.headersSent) {
-                this.__response.writeHead('Content-Type: application/json');
+                this.__response.setHeader('Content-Type', 'application/json');
+                this.__response.writeHead(code);
             }
 
             this.__response.end(JSON.stringify(output));
